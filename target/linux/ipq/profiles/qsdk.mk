@@ -53,7 +53,7 @@ NSS_CLIENTS_256MB:= kmod-qca-nss-drv-bridge-mgr kmod-qca-nss-drv-pppoe
 NSS_CLIENTS_ENTERPRISE:= kmod-qca-nss-drv-qdisc kmod-qca-nss-drv-profile \
 	kmod- kmod-qca-nss-drv-bridge-mgr
 
-NSS_CRYPTO:= kmod-qca-nss-crypto kmod-qca-nss-cfi-cryptoapi kmod-qca-nss-cfi-ocf kmod-qca-nss-drv-ipsecmgr kmod-crypto-ocf
+NSS_CRYPTO:= kmod-qca-nss-crypto kmod-qca-nss-cfi-cryptoapi kmod-qca-nss-cfi-ocf kmod-qca-nss-drv-ipsecmgr
 
 NSS_RMNET:= kmod-rmnet-nss
 
@@ -62,7 +62,7 @@ HW_CRYPTO:= kmod-crypto-qcrypto
 SHORTCUT_FE:= kmod-shortcut-fe kmod-shortcut-fe-cm kmod-shortcut-fe-drv
 QCA_RFS:= kmod-qca-rfs
 
-SWITCH_SSDK_PKGS:= kmod-qca-ssdk-hnat kmod-qca-ssdk-nohnat qca-ssdk-shell swconfig
+SWITCH_SSDK_PKGS:= kmod-qca-ssdk-hnat qca-ssdk-shell swconfig
 SWITCH_SSDK_NOHNAT_PKGS:= kmod-qca-ssdk-nohnat qca-ssdk-shell swconfig
 SWITCH_OPEN_PKGS:= kmod-switch-ar8216 swconfig
 
@@ -80,10 +80,9 @@ WIFI_10_4_PKGS:=kmod-qca-wifi-10.4-unified-profile \
 
 WIFI_PKGS:=kmod-qca-wifi-unified-profile \
 	qca-hostap qca-hostapd-cli qca-wpa-supplicant \
-	qca-wpa-cli qca-spectral qca-wpc sigma-dut \
-	qcmbr-10.4 qca-wrapd qca-wapid qca-acfg whc whc-ui \
-	qca-lowi qca-iface-mgr-10.4 qca-icm qca-cfg80211 athdiag qca-cnss-daemon \
-	athtestcmd-lith
+	qca-wpa-cli qca-spectral qca-wpc \
+	qcmbr-10.4 qca-wrapd qca-acfg \
+	qca-lowi qca-iface-mgr-10.4 qca-icm qca-cfg80211 athdiag
 
 WIFI_PKGS_256MB:=kmod-qca-wifi-lowmem-profile \
 	qca-hostap qca-hostapd-cli qca-wpa-supplicant \
@@ -112,17 +111,16 @@ USB_ETHERNET:= kmod-usb-net-rtl8152 kmod-usb-net
 
 TEST_TOOLS:=ethtool i2c-tools tcpdump
 
-UTILS:=file luci-app-samba rng-tools profilerd
+UTILS:=file luci-app-samba rng-tools
 
-COREBSP_UTILS:=pm-utils wififw_mount_script qca-thermald-10.4 qca-qmi-framework qca-time-services \
-	qca-wlanfw-upgrade dashboard
+COREBSP_UTILS:=qca-thermald-10.4 dashboard
 
 FAILSAFE:= kmod-bootconfig
 
-NETWORKING:=mcproxy -dnsmasq dnsmasq-dhcpv6 bridge ip-full trace-cmd \
-	rp-pppoe-relay iptables-mod-extra iputils-tracepath iputils-tracepath6 \
-	kmod-nf-nathelper-extra kmod-ipt-nathelper-rtsp \
-	luci-app-upnp luci-app-ddns luci-proto-ipv6
+NETWORKING:=-dnsmasq dnsmasq-dhcpv6 bridge ip-full \
+	iptables-mod-extra \
+	kmod-nf-nathelper-extra \
+	luci-proto-ipv6
 
 NETWORKING_256MB:=-dnsmasq dnsmasq-dhcpv6 bridge ip-full trace-cmd \
 	rp-pppoe-relay iptables-mod-extra iputils-tracepath iputils-tracepath6 \
@@ -148,15 +146,15 @@ BLUETOPIA:=bluetopia
 
 ZIGBEE:=zigbee_efr32
 
-QOS:=tc kmod-sched kmod-sched-core kmod-sched-connmark kmod-ifb iptables \
-	iptables-mod-filter iptables-mod-ipopt iptables-mod-conntrack-extra
+QOS:=tc kmod-sched kmod-sched-core kmod-sched-connmark iptables \
+	iptables-mod-ipopt iptables-mod-conntrack-extra
 
 MAP_PKGS:=map-t 464xlat tayga
 
 HYFI:=hyfi hyfi-ui
 PLC:=qca-plc-serv qca-plc-fw
 
-AQ_PHY:=kmod-aq_phy kmod-qca_85xx_sw aq-fw-download
+AQ_PHY:=kmod-aq_phy kmod-qca_85xx_sw
 #These packages depend on SWITCH_SSDK_PKGS
 IGMPSNOOING_RSTP:=rstp qca-mcs-apps
 
@@ -166,7 +164,7 @@ AUDIO:=kmod-sound-soc-ipq alsa
 
 VIDEO:=kmod-qpic_panel_ertft
 
-KPI:=iperf-mt sysstat
+KPI:=sysstat
 
 USB_DIAG:=kmod-diag-char kmod-usb-f-diag qca-diag
 
@@ -212,14 +210,13 @@ $(eval $(call Profile,QSDK_Open))
 
 define Profile/QSDK_Premium
 	NAME:=Qualcomm-Atheros SDK Premium Profile
-	PACKAGES:=$(OPENWRT_STANDARD) $(NSS_COMMON) $(NSS_STANDARD) $(SWITCH_SSDK_PKGS) \
+	PACKAGES:=$(OPENWRT_STANDARD) $(SWITCH_SSDK_PKGS) \
 		$(WIFI_PKGS) $(WIFI_10_4_FW_PKGS) $(STORAGE) \
-		$(NETWORKING) $(UTILS) $(SHORTCUT_FE) $(HW_CRYPTO) $(QCA_RFS) \
+		$(NETWORKING) $(UTILS) $(SHORTCUT_FE) $(QCA_RFS) \
 		$(QOS) $(QCA_ECM_PREMIUM) \
-		$(NSS_MACSEC) $(TEST_TOOLS) $(NSS_CRYPTO) $(NSS_CLIENTS_STANDARD) $(COREBSP_UTILS) \
-		$(HYFI) $(AQ_PHY) $(FAILSAFE) kmod-art2 -lacpd \
-		$(QCA_LITHIUM) $(NSS_EIP197_FW) $(CNSS_DIAG) $(FTM) $(QMSCT_CLIENT) \
-		$(MHI_QRTR) $(KPI) $(QRTR) arptables
+		$(TEST_TOOLS) $(COREBSP_UTILS) \
+		-lacpd \
+		$(KPI)
 endef
 
 define Profile/QSDK_Premium/Description
