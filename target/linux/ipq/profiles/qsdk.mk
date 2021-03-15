@@ -215,7 +215,7 @@ define Profile/QSDK_Premium
 		$(NETWORKING) $(UTILS) $(SHORTCUT_FE) $(QCA_RFS) \
 		$(QOS) $(QCA_ECM_PREMIUM) \
 		$(TEST_TOOLS) $(COREBSP_UTILS) \
-		-lacpd \
+		-lacpd $(QCA_EDMA) \
 		$(KPI)
 endef
 
