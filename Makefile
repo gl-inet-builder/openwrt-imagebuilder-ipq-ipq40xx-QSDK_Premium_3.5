@@ -184,6 +184,8 @@ si: FORCE
 	mv $(si_bin_dir)/openwrt-ipq-ipq40xx-squashfs-root.img $(si_bin_dir)/openwrt-ipq806x-squashfs-root.img; \
 	mv $(si_bin_dir)/openwrt-ipq-ipq40xx-ubi-root.img $(si_bin_dir)/openwrt-ipq806x-ipq40xx-ubi-root.img; \
 	cd single_img_dir/IPQ4019.ILQ.5.0/common/build; \
+	sed -i s/"3.201"/"`cat $(TOPDIR)/build_dir/target-arm_cortex-a7_musl-1.1.16_eabi/root-ipq/etc/glversion`"/ $(si_bin_dir)/sysupgrade.meta ; \
+	sed -i s/"20210402201017"/`date '+%Y%m%d%H%M%S'`/ $(si_bin_dir)/sysupgrade.meta ; \
 	python pack.py -t nor -B -F appsboardconfig_premium -o ../../../ipq40xx-nor-apps.img  ./ipq; \
 	python pack.py -t norplusemmc -B -F appsboardconfig_premium -o ../../../ipq40xx-noremmc-apps.img ./ipq; \
 	python pack.py -t norplusnand -B -F appsboardconfig_premium -o ../../../ipq40xx-nornand-apps.img ./ipq; \
