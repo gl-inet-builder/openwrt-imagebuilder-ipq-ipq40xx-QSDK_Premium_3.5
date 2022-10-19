@@ -191,7 +191,8 @@ si: FORCE
 	python pack.py -t norplusnand -B -F appsboardconfig_premium -o ../../../ipq40xx-nornand-apps.img ./ipq; \
 	cd ../../.. ; \
 	mv ipq40xx-nor-apps.img b1300-nor-apps.img; \
-	mv ipq40xx-noremmc-apps.img s1300-noremmc-apps.img; \
+	cp ipq40xx-noremmc-apps.img s1300-noremmc-apps.img; \
+	mv ipq40xx-noremmc-apps.img b2200-noremmc-apps.img; \
 	mv ipq40xx-nornand-apps.img ap1300-nornand-apps.img
 
 info:
